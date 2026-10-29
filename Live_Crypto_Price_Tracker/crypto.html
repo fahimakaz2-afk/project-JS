@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Crypto Tracker</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121214;
+            color: white;
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .crypto-box {
+            background-color: #1a1a1e;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            text-align: center;
+            width: 100%;
+            max-width: 350px;
+            border: 1px solid #2a2a30;
+        }
+        h2 {
+            margin-top: 0;
+            color: #9d81ca;
+        }
+        .price-display {
+            font-size: 2.2rem;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #4cd137;
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            background-color: #9d81ca;
+            color: white;
+            border-radius: 25px;
+            font-weight: bold;
+            width: 100%;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background-color: #ad99cc;
+        }
+        .loading-text {
+            color: #aaa;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="crypto-box">
+        <h2>Bitcoin (BTC) Price</h2>
+        <!-- This is where the live price will go -->
+        <div id="btc-price" class="price-display">Loading...</div>
+        
+        <button id="refresh-btn">🔄 Refresh Price</button>
+    </div>
+
+    <script>
+        const priceDisplay = document.getElementById("btc-price");
+        const refreshBtn = document.getElementById("refresh-btn");
+
+        const apiURL = "https://binance.com";
+
+        async function getCryptoPrice() {
+            try{
+                priceDisplay.innerText = "Fetching...";
+
+                const response = await fetch(apiURL)
+
+                const data = await response.json()
+
+                 priceDisplay.innerText = "₹" + data.bitcoin.inr.toLocaleString("en-IN");
+            }
+            catch (error) {
+
+                priceDisplay.innerText = "Error loading price";
+                console.error("Fetch failed:", error);
+            }
+        }
+
+        refreshBtn.addEventListener("click",()=>{
+            getCryptoPrice()
+        })
+
+    </script>
+</body>
+</html>

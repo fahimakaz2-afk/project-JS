@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>smart-counter-app</title>
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: papayawhip;
+            margin: 0;
+        }
+        .counter-container{
+            background-color: #fff;
+            margin: 10px;
+            padding: 30px;
+            border-radius: 40px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            text-align:center;
+        }
+        
+        button{
+            font-size: 1.5rem;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 10px;
+            background-color: #9d81ca;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+       button:hover{
+        background-color: #ad99cc;
+        cursor: pointer;
+       }
+        
+
+    </style>
+</head>
+<body>
+    <div class="counter-container">
+        <h2>Digital Counter</h2>
+        <h1 id="counter-value">0</h1>
+        <button id = "decrement-btn">- Decrement</button>
+        <button id = "increment-btn">+ Increment</button>
+    </div>
+    <script>
+        const counterDisplay = document.getElementById("counter-value");
+        const incrementBtn = document.getElementById("increment-btn")
+        const decrementBtn = document.getElementById("decrement-btn")
+
+        let savedCount = localStorage.getItem("myCounterValue")
+        let count = savedCount ? Number(savedCount): 0;
+        counterDisplay.innerText = count;
+
+        incrementBtn.addEventListener("click",()=>{
+            count++
+            counterDisplay.innerText = count
+            localStorage.setItem("myCounterValue", count);
+        })
+
+        decrementBtn.addEventListener("click",()=>{
+            count--;
+            counterDisplay.innerText = count;
+            localStorage.setItem("myCounterValue", count);
+        })
+
+    </script>
+</body>
+</html>

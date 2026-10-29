@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Product Filter</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: #333;
+        }
+        .filter-buttons {
+            margin-bottom: 30px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            border: 2px solid #9d81ca;
+            background-color: white;
+            color: #9d81ca;
+            border-radius: 20px;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+        button:hover, button.active {
+            background-color: #9d81ca;
+            color: white;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1000px;
+        }
+        .product-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            text-align: center;
+            border: 1px solid #eee;
+        }
+        .product-card h3 {
+            margin: 10px 0 5px 0;
+            color: #333;
+        }
+        .product-card p {
+            color: #777;
+            font-size: 0.9rem;
+            margin: 0 0 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Gadget Store</h1>
+
+    <!-- Category filter buttons -->
+    <div class="filter-buttons">
+        <button id="btn-all" class="active">All</button>
+        <button id="btn-audio">Audio</button>
+        <button id="btn-wearables">Wearables</button>
+        <button id="btn-laptops">Laptops</button>
+    </div>
+
+    <!-- Container wrapper matches JavaScript selector -->
+    <div id="grid-wrapper" class="product-grid">
+        <!-- Dynamic content will go here -->
+    </div>
+
+    <script>
+        const gridContainer = document.getElementById("grid-wrapper")
+
+          const inventory = [
+            { name: "iPhone 16 Pro", cat: "Laptops", price: "₹1,19,900" }, 
+            { name: "Sony WH-1000XM5", cat: "Audio", price: "₹29,999" },
+            { name: "MacBook Air M3", cat: "Laptops", price: "₹1,14,900" },
+            { name: "Apple Watch Ultra", cat: "Wearables", price: "₹89,900" },
+            { name: "Wireless Earbuds", cat: "Audio", price: "₹4,999" }
+        ];
+
+        function displayProducts(productsArray){
+            const cardsHTML = productsArray.map(product =>{
+                return `
+                    <div class="product-card">
+                        <h3>${product.name}</h3>
+                        <p>Category: ${product.cat}</p>
+                        <p><strong>${product.price}</strong></p>
+
+                    </div>
+                `;
+            }).join("");
+
+            gridContainer.innerHTML = cardsHTML;
+        }
+        displayProducts(inventory);
+
+        
+        const audioBtn = document.getElementById("btn-audio");
+        audioBtn.addEventListener("click", () => {
+            const onlyAudio = inventory.filter(product => product.cat === "Audio");
+            displayProducts(onlyAudio);
+        });
+
+        const wearableBtn = document.getElementById("btn-wearables");
+        wearableBtn.addEventListener("click", () => {
+            const onlyWearables = inventory.filter(product => product.cat === "Wearables");
+            displayProducts(onlyWearables);
+        });
+
+        const laptopBtn = document.getElementById("btn-laptops");
+        laptopBtn.addEventListener("click", () => {
+            const onlyLaptops = inventory.filter(product => product.cat === "Laptops");
+            displayProducts(onlyLaptops);
+        });
+
+        const allBtn = document.getElementById("btn-all");
+        allBtn.addEventListener("click", () => {
+            displayProducts(inventory);
+        });
+
+    </script>
+</body>
+</html>
